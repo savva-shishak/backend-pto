@@ -1,6 +1,7 @@
 package com.example.server.main
 
 import com.example.server.notify.NotifyService
+import com.fasterxml.jackson.annotation.JsonView
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.ui.Model
@@ -68,12 +69,14 @@ abstract class MvcController<M : DataModel, S : MvcService<M, R>, R : JpaReposit
     }
 
     @GetMapping("/api")
+    @JsonView(DataModel.Just::class)
     @ResponseBody
     fun api(@RequestParam filter: String): List<M> {
         return service!!.find(filter)
     }
 
     @GetMapping("/findAll")
+    @JsonView(DataModel.Just::class)
     @ResponseBody
     fun apiIndexes(@RequestParam indexes: String): List<M> {
         return repository!!.findAllById(service!!.toIntegerList(indexes))

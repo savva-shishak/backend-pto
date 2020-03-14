@@ -6,4 +6,8 @@ import javax.persistence.Id
 
 interface DataModel {
     var id: Int;
+
+    interface Just
+
+    interface Full: Just
 }
