@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title th:text="${employee.getName()}"></title>
+</head>
+<body>
+  <main>
+    <div th:replace="fragments :: notifies"></div>
+    <div th:replace="fragments :: header"></div>
+    <form class="panel" action="/employee" method="post">
+      <div class="employeeform">
+        <div class="employeeform__name">
+          <div class="input">
+            <div class="input__label">Фамилия Имя Отчество</div>
+            <input type="text" th:value="${employee.getName()}" name="name" class="input__control" required>
+          </div>
+        </div>
+        <div class="employeeform__tabelNumber">
+          <div class="input">
+            <div class="input__label">Табельный номер</div>
+            <input type="text" th:value="${employee.getTabelNumber()}" name="tabelNumber" class="input__control" required>
+          </div>
+        </div>
+        <div class="employeeform__phone">
+          <div class="input">
+            <div class="input__label">Телефон</div>
+            <input type="number" th:value="${employee.getPhone()}" name="phone" class="input__control" required>
+          </div>
+        </div>
+        <div class="employeeform__position">
+          <div class="input">
+            <div class="input__label">Должность</div>
+            <input type="text" th:value="${employee.getPosition()}" name="position" class="input__control" required>
+          </div>
+        </div>
+        <div class="employeeform__placeOfRegistration">
+          <div class="input">
+            <div class="input__label">Место регитрации</div>
+            <input type="text" th:value="${employee.getPlaceOfRegistration()}" name="placeOfRegistration" class="input__control" required>
+          </div>
+        </div>
+        <div class="employeeform__placeOfResidance">
+          <div class="input">
+            <div class="input__label">Место проживания</div>
+            <input type="text" th:value="${employee.getPlaceOfResidence()}" name="placeOfResidence" class="input__control" required>
+            <div class="input__hint">Если совпадает с местом регистрации, можно не указывать</div>
+          </div>
+        </div>
+      </div>
+
+      <hr>
+
+      <div class="connects">
+        <span class="connects__title">Связи</span>
+
+        <div class="connect" id="equipments-connect">
+          <div class="connect__title">Оборудование</div>
+          <div class="connect__body">
+            <div class="list list_empty">
+              <div class="list__msg">Подождите...</div>
+            </div>
+          </div>
+         <div class="connect__actions">
+            <div class="autocomplete">
+              <div class="autocomplete__control">
+                <div class="input">
+                  <div class="input__label">Поиск по инвентаному номеру</div>
+                  <input type="text" placeholder="Найти и добавить" class="input__control">
+                </div>
+              </div>
+              <div class="autocomplete__absolutecontainer">
+                <div class="autocomplete__list">
+                  <div class="list"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="connect" id="contracts-connect">
+          <div class="connect__title">Договоры</div>
+          <div class="connect__body">
+            <div class="list list_empty">
+              <div class="list__msg">Подождите...</div>
+            </div>
+          </div>
+         <div class="connect__actions">
+            <div class="autocomplete">
+              <div class="autocomplete__control">
+                <div class="input">
+                  <div class="input__label">Поиск по номеру договора</div>
+                  <input type="text" placeholder="Найти и добавить" class="input__control">
+                </div>
+              </div>
+              <div class="autocomplete__absolutecontainer">
+                <div class="autocomplete__list">
+                  <div class="list"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div th:object="${employee}" class="tools">
+        <a th:href="'/tabel/' + *{id}" class="tools__btn">
+          Посмотреть табель
+        </a>
+        <button id="employee-save-btn" type="button" class="tools__btn">
+          Сохранить
+        </button>
+        <a th:href="'/employee/delete/' + *{id}" class="tools__btn tools__btn_warning">
+          Удалить
+        </a>
+      </div>
+
+      <input th:value="${employee.getId()}" name="id" type="hidden">
+
+      <input th:value="${equipments}" type="hidden" name="equipments" id="equipments-input">
+      <input th:value="${contracts}" type="hidden" name="contracts" id="contracts-input">
+    </form>
+  </main>
+  <div th:replace="fragments :: script"></div>
+</body>
+</html>

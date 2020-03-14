@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>Реестры</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <div th:replace="fragments :: notifies"></div>
+        <main class="sections">
+            <div class="section">
+                <div class="connect">
+                    <div class="connect__title">Договоры</div>
+                    <div class="connect__body">
+                        <div class="list">
+                            <a
+                                    th:each="contract : ${contracts}"
+                                    th:href="'/contract/' + ${contract.getId()}"
+                                    class="list__item"
+                                    th:text="${contract.getNum()}"
+                            >
+                            </a>
+                        </div>
+                    </div>
+                    <div class="connect__actions">
+                        <div class="tools">
+                            <a href="/contract" class="tools__btn tools__btn_small">Перейти</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="section">
+                <div class="connect">
+                    <div class="connect__title">Сотрудники</div>
+                    <div class="connect__body">
+                        <div class="list">
+                            <a
+                                    class="list__item"
+                                    th:each="employee : ${employees}"
+                                    th:href="'/employee/' + ${employee.getId()}"
+                                    th:text="${employee.getName()}"></a>
+                        </div>
+                    </div>
+                    <div class="connect__actions">
+                        <div class="tools">
+                            <a href="/employee" class="tools__btn tools__btn_small">Перейти</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="section">
+                <div class="connect">
+                    <div class="connect__title">Оборудование и техника</div>
+                    <div class="connect__body">
+                        <div class="list">
+                            <a
+                                    th:each="equipment : ${equipments}"
+                                    th:href="'/equipment/' + ${equipment.getId()}"
+                                    th:text="${equipment.getName()} + ' ' + ${equipment.getModel()} + ' ' + ${equipment.getModelNumber()}"
+                                    class="list__item"
+                            ></a>
+                        </div>
+                    </div>
+                    <div class="connect__actions">
+                        <div class="tools">
+                            <a href="/equipment" class="tools__btn tools__btn_small">Перейти</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="section">
+                <div class="connect">
+                    <div class="connect__title">Материалы</div>
+                    <div class="connect__body">
+                        <div class="list">
+                            <a
+                                    th:each="material : ${materials}"
+                                    th:href="'/material/' + ${material.getId()}"
+                                    th:text="${material.getName()} + ' ' + ${material.getNum()} + ${material.getUnits() + '.'}"
+                                    class="list__item"
+                            ></a>
+                        </div>
+                    </div>
+                    <div class="connect__actions">
+                        <div class="tools">
+                            <a href="pages/search.html" class="tools__btn tools__btn_small">Перейти</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <div th:replace="fragments :: script"></div>
+    </body>
+</html>

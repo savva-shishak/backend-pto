@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title th:text="${equipment.getName()}"></title>
+</head>
+<body>
+  <main>
+    <div th:replace="fragments :: notifies"></div>
+    <div th:replace="fragments :: header"></div>
+    <form class="panel" method="post" action="/equipment">
+      <div>
+        <div>
+          <div class="input">
+            <div class="input__label">Название</div>
+            <input type="text" th:value="${equipment.getName()}" name="name" class="input__control">
+          </div>
+        </div>
+        <div>
+          <div class="input">
+            <div class="input__label">Инвентарный номер</div>
+            <input type="text" th:value="${equipment.getInventoryNumber()}" name="inventoryNumber" class="input__control">
+          </div>
+        </div>
+        <div>
+          <div class="input">
+            <div class="input__label">Модель</div>
+            <input type="text" th:value="${equipment.getModel()}" name="model" class="input__control">
+          </div>
+        </div>
+        <div>
+          <div class="input">
+            <div class="input__label">Номер модели</div>
+            <input type="text" th:value="${equipment.getModelNumber()}" name="modelNumber" class="input__control">
+          </div>
+        </div>
+        <div>
+          <div class="input">
+            <div class="input__label">Серийный номер</div>
+            <input type="text" th:value="${equipment.getSerialNumber()}" name="serialNumber" class="input__control">
+          </div>
+        </div>
+        <div>
+          <div class="input">
+            <div class="input__label">Состояние</div>
+            <textarea th:value="${equipment.getState()}" name="state" class="input__control"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <div class="tools">
+        <a th:object="${equipment}"
+                th:if="*{holder}"
+                th:href="'/employee/' + *{holder.getId()}"
+                th:text="*{holder.getName()}"
+                class="tools__link">
+        </a>
+        <div th:if="${equipment.getHolder() == null}" class="tools__link">Нет ответственного</div>
+        <a th:if="${equipment.getId()}"  th:href="'/equipment/find-holder/' + ${equipment.getId()}" class="tools__btn">
+          Привязать к...
+        </a>
+        <button id="equipment-save-btn" type="submit" class="tools__btn">
+          Сохранить
+        </button>
+        <a th:if="${equipment.getId()}" th:href="'/equipment/delete/' + ${equipment.getId()}" class="tools__btn tools__btn_warning">
+          Удалить
+        </a>
+      </div>
+
+      <input type="hidden" name="id" th:value="${equipment.getId()}">
+    </form>
+  </main>
+  <div th:replace="fragments :: script"></div>
+</body>
+</html>

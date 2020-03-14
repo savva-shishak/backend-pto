@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>Поиск в реестре</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <main>
+            <div th:replace="fragments :: notifies"></div>
+            <div th:replace="fragments :: header"></div>
+            <form class="input">
+                  <input class="input__control" th:value="${filterValue}" th:placeholder="${placeholder}" autocomplete="off" type="text" name="filter">
+                  <button class="input__btn" type="submit">Найти</button>
+            </form>
+            <div class="tools">
+                  <a th:if="${addingLink}" th:href="${addingLink}" class="tools__btn">Добавить</a>
+            </div>
+            <div class="list">
+                <a
+                  th:each="link : ${links}"
+                  th:href="${link.href}"
+                  th:utext="${link.text}"
+                  class="list__item">
+                </a>
+                <a
+                        th:each="contract : ${contracts}"
+                        th:href="'/' + ${linkStart} + '/' + ${contract.getId()}"
+                        class="list__item"
+                >
+                    <span th:text="${contract.getNum()}"></span>
+
+                    <span th:text="${contract.getDescription(100)}" class="text-grey"></span>
+                </a>
+                <div
+                        class="list__item"
+                        th:each="employee : ${employees}"
+                        th:object="${employee}"
+                >
+                    <div class="tools tools_sm tools_between">
+                        <a th:href="'/' + ${linkStart} + '/' + *{id}" th:text="'(' + *{position} + ') ' + *{name}" class="tools__msg"></a>
+
+                        <a th:href="'/tabel/' + *{id}" class="tools__btn">Посмотреть табель</a>
+                    </div>
+                </div>
+                <div
+                        th:each="equipment : ${equipments}"
+                        class="list__item"
+                >
+                    <div class="tools tools_sm tools_between">
+                        <a
+                                th:href="'/' + ${linkStart} + '/' + ${equipment.getId()}"
+                                th:object="${equipment}"
+                                class="tools__msg"
+                        >
+                            <span th:text="*{name} + ' ' + *{model} + ' ' + *{modelNumber}"></span>
+
+                            <a th:if="*{holder}" th:href="'/employee/' + *{holder.getId()}" th:text="*{holder.getName()}" class="text-grey"></a>
+                            <span th:unless="*{holder}" class="text-grey">Ответственный не назначен</span>
+                        </a>
+                        <a th:href="'/equipment/find-holder/' + ${equipment.getId()}" class="tools__btn">Привязать к...</a>
+                    </div>
+                </div>
+                <div
+                        th:each="material : ${materials}"
+                        class="list__item"
+                >
+                    <div class="tools tools_sm tools_between">
+                        <a class="tools__msg"
+                           th:object="${material}"
+                           th:href="'/' + ${linkStart} + '/' + ${material.getId()}"
+                        >
+                            <span th:text="*{name} + ' ' + *{num} + *{units}"></span>
+
+                            <a th:if="*{contract}" th:href="'/contract/' + *{contract.getId()}" th:text="*{contract.getNum()}" class="text-grey"></a>
+                            <span th:unless="*{contract}" class="text-grey">Несвязан ни с одним договором</span>
+                        </a>
+                        <a th:href="'/material/find-contract/' + ${material.getId()}" class="tools__btn">Привязать к...</a>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <div th:replace="fragments :: script"></div>
+    </body>
+</html>

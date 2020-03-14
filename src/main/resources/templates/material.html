@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title th:text="${material.getName()}"></title>
+</head>
+<body>
+  <main>
+    <div th:replace="fragments :: notifies"></div>
+    <div th:replace="fragments :: header"></div>
+    <form class="panel" method="post" action="/material">
+      <div class="contract-form">
+        <div>
+          <div class="input">
+            <div class="input__label">Название</div>
+            <input name="name" th:value="${material.getName()}" type="text" class="input__control">
+          </div>
+        </div>
+        <div>
+          <div class="input">
+            <div class="input__label">Количетво</div>
+            <input name="num" th:value="${material.getNum()}" type="number" class="input__control">
+          </div>
+        </div>
+
+        <div>
+          <div class="input">
+            <div class="input__label">Единицы измерения</div>
+            <input name="units" th:value="${material.getUnits()}" class="input__control">
+          </div>
+        </div>
+      </div>
+
+      </div>
+      <div class="tools">
+        <a
+                th:if="${contract}"
+                th:href="'/contract/' + ${contract.getId()}"
+                th:text="${contract.getNum()}"
+                class="tools__link"></a>
+        <a th:if="${material.getId()}"  th:href="'/material/find-contract/' + ${material.getId()}" class="tools__btn">
+          Привязать к...
+        </a>
+        <button id="equipment-save-btn" type="submit" class="tools__btn">
+          Сохранить
+        </button>
+        <a th:if="${material.getId()}"  th:href="'/material/delete/' + ${material.getId()}" class="tools__btn tools__btn_warning">
+          Удалить
+        </a>
+      </div>
+
+      <input type="hidden" name="id" th:value="${material.getId()}">
+    </form>
+  </main>
+  <div th:replace="fragments :: script"></div>
+</body>
+</html>

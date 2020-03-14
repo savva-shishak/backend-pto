@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title th:text="'Договор: ' + ${contract.getNum()}"></title>
+</head>
+<body>
+  <main>
+    <div th:replace="fragments :: notifies"></div>
+    <div th:replace="fragments :: header"></div>
+    <form class="panel" method="post" action="/contract">
+      <div class="contract-form">
+        <div class="contract-form__descript">
+          <div class="input">
+            <div class="input__label">Описание</div>
+            <textarea name="description" rows="4" class="input__control" th:text="${contract.getDescription()}" required></textarea>
+          </div>
+        </div>
+
+        <div class="contract-form__number">
+          <div class="input">
+            <div class="input__label">Номер</div>
+            <input th:value="${contract.getNum()}" name="num" type="text" class="input__control" required="required">
+          </div>
+        </div>
+        <div class="contract-form__sum">
+          <div class="input">
+            <div class="input__label">Сумма</div>
+            <input th:value="${contract.getSum()}" name="sum" type="text" class="input__control" required>
+          </div>
+        </div>
+
+        <div class="contract-form__start">
+          <div class="input">
+            <div class="input__label">С</div>
+            <input th:value="${contract.getDateStart()}" name="dateStart" type="date" value="" class="input__control" required>
+          </div>
+        </div>
+        <div class="contract-form__end">
+          <div class="input">
+            <div class="input__label">До</div>
+            <input th:value="${contract.getDateEnd()}" name="dateEnd" type="date" value="" class="input__control" required>
+          </div>
+        </div>
+      </div>
+
+      <div class="connects">
+
+        <span class="connects__title">Связи</span>
+
+        <div class="connect" id="employees-connect">
+          <div class="connect__title">Люди</div>
+          <div class="connect__body">
+            <div class="list list_empty">
+              <div class="list__msg">Подождите...</div>
+            </div>
+          </div>
+
+          <div class="connect__actions">
+            <div class="autocomplete">
+              <div class="autocomplete__control">
+                <div class="input">
+                  <div class="input__label">Поиск по ФИО</div>
+                  <input type="text" placeholder="Найти и добавить" class="input__control">
+                </div>
+              </div>
+              <div class="autocomplete__absolutecontainer">
+                <div class="autocomplete__list">
+                  <div class="list"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="connect" id="equipments-connect">
+          <div class="connect__title">Оборудование</div>
+          <div class="connect__body">
+            <div class="list list_empty">
+              <div class="list__msg">Подождите...</div>
+            </div>
+          </div>
+
+         <div class="connect__actions">
+            <div class="autocomplete">
+              <div class="autocomplete__control">
+                <div class="input">
+                  <div class="input__label">Поиск по инвентаному номеру</div>
+                  <input type="text" placeholder="Найти и добавить" class="input__control">
+                </div>
+              </div>
+              <div class="autocomplete__absolutecontainer">
+                <div class="autocomplete__list">
+                  <div class="list"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="connect" id="materials-connect">
+          <div class="connect__title">Материалы</div>
+          <div class="connect__body">
+            <div class="list list_empty">
+              <div class="list__msg">Подождите...</div>
+            </div>
+          </div>
+
+         <div class="connect__actions">
+            <div class="autocomplete">
+              <div class="autocomplete__control">
+                <div class="input">
+                  <div class="input__label">Поиск по названию</div>
+                  <input type="text" placeholder="Найти и добавить" class="input__control">
+                </div>
+              </div>
+              <div class="autocomplete__absolutecontainer">
+                <div class="autocomplete__list">
+                  <div class="list"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="tools">
+        <button id="contract-save-btn" type="button" class="tools__btn">
+          Сохранить
+        </button>
+        <a th:href="'/contract/delete/' + ${contract.getId()}" class="tools__btn tools__btn_warning">
+          Удалить
+        </a>
+      </div>
+
+      <input th:value="${contract.getId()}" name="id" type="hidden">
+      <input th:value="${employees}" type="hidden" name="employees" id="employees-input">
+      <input th:value="${equipments}" type="hidden" name="equipments" id="equipments-input">
+      <input th:value="${materials}" type="hidden" name="materials" id="materials-input">
+    </form>
+  </main>
+  <div th:replace="fragments :: script"></div>
+</body>
+</html>

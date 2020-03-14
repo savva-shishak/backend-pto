@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title th:text="'Табель ' + ${employee.getName()}"></title>
+</head>
+<body>
+<main>
+  <div th:replace="fragments :: notifies"></div>
+  <div th:replace="fragments :: header"></div>
+  <div class="panel">
+    <h3 class="text-grey" th:text="${employee.name}"></h3>
+
+    <form th:action="'create/' + ${employee.id}" class="connect" style="width: 300px;">
+      <div class="connect__title">Добавить месяц</div>
+      <div class="connect__actions">
+        <div class="tools">
+          <div class="input">
+            <div class="input__label">Название месяца</div>
+            <select name="name" class="input__control">
+              <option value="Январь">Январь</option>
+              <option value="Февраль">Февраль</option>
+              <option value="Март">Март</option>
+              <option value="Арель">Арель</option>
+              <option value="Май">Май</option>
+              <option value="Июнь">Июнь</option>
+              <option value="Июль">Июль</option>
+              <option value="Август">Август</option>
+              <option value="Сентябрь">Сентябрь</option>
+              <option value="Октябрь">Октябрь</option>
+              <option value="Ноябрь">Ноябрь</option>
+              <option value="Декабрь">Декабрь</option>
+            </select>
+            <button class="input__btn">Добавить</button>
+          </div>
+        </div>
+      </div>
+    </form>
+
+    <form th:each="month : ${tabel}" th:object="${month}" th:action="'/tabel/save/' + *{id}" class="month">
+      <div class="month__name" th:text="*{name}"></div>
+      <div class="month__days" id="month-feb">
+        <div th:each="day, i : *{days}" class="month__day">
+          <div class="day__number" th:text="${i.count}"></div>
+          <input th:value="${day}" th:name="${i.index}" class="day__value">
+        </div>
+      </div>
+      <div class="month__actions">
+        <div class="tools">
+          <button class="tools__btn">Сохранить</button>
+          <a th:href="'delete/' + *{id}" class="tools__btn tools__btn_warning">Удалить</a>
+        </div>
+      </div>
+    </form>
+  </div>
+</main>
+<div th:replace="fragments :: script"></div>
+</body>
+</html>
